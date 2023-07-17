@@ -1,0 +1,19 @@
+// general
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+}
+
+// heading
+
+#title,
+#by {
+    text-align: center;
+}
+
+#by {
+    font-size: small;
+}
