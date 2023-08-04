@@ -1,9 +1,15 @@
+// to do's
+
+
 // audio context
 const audioContext = new AudioContext()
 
 // audio sources
-const track_1_elem = document.querySelectorAll('.clip')[0]
-const track_1 = audioContext.createMediaElementSource(track_1_elem)
+const audioElems = document.querySelectorAll('.clip')
+const tracks = []
+for (let i = 0; i < 1; i++) {
+    tracks.push(audioContext.createMediaElementSource(audioElems[i]))
+}
 
 // gain
 
@@ -11,17 +17,19 @@ const track_1 = audioContext.createMediaElementSource(track_1_elem)
 const destination = audioContext.destination
 
 // connect
-track_1.connect(destination)
+for (let i = 0; i < 1; i++) {
+    tracks[i].connect(destination)
+}
 
 // play buttons
-const track_1_playButton = document.querySelectorAll('.play-button')[0]
+const playButtons = document.querySelectorAll('.play-button')
 
-track_1_playButton.addEventListener('click', () => {
-    track_1_elem.load()
-    track_1_elem.play()
-})
+for (let i = 0; i < playButtons.length; i++) {
+    playButtons[i].addEventListener('click', () => {
+        audioElems[i].load()
+        audioElems[i].play()
+    })
+}
 
-// to do's
-// figure out overlapping/layered audio. test second button first.
-// define listener function
-// define array of elements to add event listeners in a loop
+
+
