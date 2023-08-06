@@ -17,30 +17,86 @@ for (let i = 0; i < audioElems.length; i++) {
 const kits = [
     {
         name: 'Kit 1',
+        directory: 'audio/audio_set_1/',
         sources: [
-            'audio/audio_set_1/blaster.mp3',
-            'audio/audio_set_1/click.mp3',
-            'audio/audio_set_1/point.mp3',
-            'audio/audio_set_1/start.mp3',
-            'audio/audio_set_1/synth.mp3',
-            'audio/audio_set_1/synth_2.mp3',
-            'audio/audio_set_1/beat_1.wav',
-            'audio/audio_set_1/beat_2.wav',
-            'audio/audio_set_1/beat_3.wav',
+            {
+                source: 'blaster.mp3',
+                description: 'Blaster'
+            },
+            {
+                source: 'click.mp3',
+                description: 'Click'
+            },
+            {
+                source: 'point.mp3',
+                description: 'Point'
+            },
+            {
+                source: 'start.mp3',
+                description: 'Start'
+            },
+            {
+                source: 'synth_1.mp3',
+                description: 'Synth 1'
+            },
+            {
+                source: 'synth_2.mp3',
+                description: 'Synth 2'
+            },
+            {
+                source: 'beat_1.wav',
+                description: 'Beat 1'
+            },
+            {
+                source: 'beat_2.wav',
+                description: 'Beat 2'
+            },
+            {
+                source: 'beat_3.wav',
+                description: 'Beat 3'
+            }
         ]
     },
     {
         name: 'Kit 2',
+        directory: 'audio/audio_set_2/',
         sources: [
-            'audio/audio_set_2/guitar_a.mp3',
-            'audio/audio_set_2/guitar_b.mp3',
-            'audio/audio_set_2/guitar_c.mp3',
-            'audio/audio_set_2/guitar_d.mp3',
-            'audio/audio_set_2/guitar_e.mp3',
-            'audio/audio_set_2/guitar_f.mp3',
-            'audio/audio_set_2/guitar_g.mp3',
-            'audio/audio_set_2/snare_drum.mp3',
-            'audio/audio_set_2/bass_drum.mp3'
+            {
+                source: 'guitar_a.mp3',
+                description: 'Guitar A'
+            },
+            {
+                source: 'guitar_b.mp3',
+                description: 'Guitar B'
+            },
+            {
+                source: 'guitar_c.mp3',
+                description: 'Guitar C'
+            },
+            {
+                source: 'guitar_d.mp3',
+                description: 'Guitar D'
+            },
+            {
+                source: 'guitar_e.mp3',
+                description: 'Guitar E'
+            },
+            {
+                source: 'guitar_f.mp3',
+                description: 'Guitar F'
+            },
+            {
+                source: 'guitar_g.mp3',
+                description: 'Guitar G'
+            },
+            {
+                source: 'snare_drum.mp3',
+                description: 'Snare Drum'
+            },
+            {
+                source: 'bass_drum.mp3',
+                description: 'Bass Drum'
+            }
         ]
     }
 ]
@@ -55,8 +111,15 @@ const signal = controller.signal
 function nextKit() {
     controller.abort()
 
+    kitSelect.textContent = kits[currentKit].name
+
     for (let i = 0; i < kits[currentKit].sources.length; i++) {
-        audioElems[i].setAttribute('src', kits[currentKit].sources[i])
+        audioElems[i].setAttribute(
+            'src',
+            kits[currentKit].directory + kits[currentKit].sources[i].source
+        )
+
+        audioElems[i].setAttribute('data-description', kits[currentKit].sources[i].description)
     }
 
     if (currentKit < kits.length - 1) {
@@ -100,7 +163,7 @@ for (let i = 0; i < drumPads.length; i++) {
         audioElems[i].load()
         audioElems[i].play()
 
-        display.textContent = drumPads[i].dataset.description
+        display.textContent = audioElems[i].dataset.description
     })
 }
 
@@ -115,7 +178,7 @@ for (let i = 0; i < drumPads.length; i++) {
             audioElems[i].load()
             audioElems[i].play()
 
-            display.textContent = drumPads[i].dataset.description
+            display.textContent = audioElems[i].dataset.description
         }
     })
 }
