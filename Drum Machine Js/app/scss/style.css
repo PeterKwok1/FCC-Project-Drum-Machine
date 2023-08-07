@@ -3,13 +3,135 @@
   margin: 0;
   padding: 0;
   border: 1px solid black;
+  font-family: "Segoe UI";
 }
 
-#title,
-#by {
+body {
+  background-color: rgb(181, 114, 87);
+}
+
+#drum-machine {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto auto;
+  width: 600px;
+  height: 400px;
+  font-weight: bold;
+  background-color: rgb(21, 77, 232);
+  border-radius: 20px;
+  margin-top: 75px;
+}
+
+#drum-pad-wrapper {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+  margin: 10px;
+}
+
+.drum-pad {
+  height: 100px;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(200, 200, 200);
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.drum-pad:hover {
+  background-color: rgb(170, 170, 170);
+}
+
+.pad {
+  font-size: x-large;
+}
+
+#panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: aliceblue;
+}
+
+#display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 150px;
+  background-color: rgb(221, 221, 221);
+}
+
+#volume {
+  accent-color: rgb(70, 70, 70);
+  cursor: pointer;
+  height: 30px;
+  width: 150px;
+  -webkit-appearance: none;
+}
+
+#volume::-webkit-slider-runnable-track {
+  background: black;
+  height: 2px;
+}
+
+#volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: black;
+  height: 20px;
+  width: 10px;
+  margin-top: -9px;
+}
+
+#kit-select {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 150px;
+  background-color: rgb(200, 200, 200);
+  cursor: pointer;
+}
+
+#kit-select:hover {
+  background-color: rgb(170, 170, 170);
+}
+
+#label {
+  width: 150px;
   text-align: center;
+  font-size: x-small;
+  font-style: italic;
+  line-height: 1;
+  margin-top: 30px;
 }
 
 #by {
-  font-size: small;
+  margin-top: 5px;
+}
+
+@media only screen and (max-width: 600px) {
+  #drum-machine {
+    flex-direction: column;
+    height: 550px;
+    width: 400px;
+  }
+  #panel {
+    flex-direction: row;
+  }
+  #label {
+    margin: auto;
+  }
 }/*# sourceMappingURL=style.css.map */

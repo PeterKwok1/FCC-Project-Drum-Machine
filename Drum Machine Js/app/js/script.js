@@ -101,7 +101,7 @@ const kits = [
     }
 ]
 
-const kitSelect = document.querySelector('#kit_select')
+const kitSelect = document.querySelector('#kit-select')
 
 let currentKit = 0
 
