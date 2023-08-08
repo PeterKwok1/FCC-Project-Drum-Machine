@@ -1,15 +1,27 @@
-// general
+// color scheme: complimentary
+$primary: #0027FF;
+$highlight: #FFD800;
+$display: #DDE2FF;
+$pads: #dcdcdc;
+$pressed: #b5b5b5;
+$track: black;
+$thumb: black;
+$hover: white;
 
+.hover:hover {
+    background-color: $hover;
+}
+
+// body
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    border: 1px solid black;
     font-family: 'Segoe UI';
 }
 
 body {
-    background-color: rgb(181, 114, 87);
+    background-color: $highlight;
 }
 
 // drum machine
@@ -18,11 +30,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 20px;
     margin: auto auto;
     width: 600px;
     height: 400px;
     font-weight: bold;
-    background-color: rgb(21, 77, 232);
+    background-color: $primary;
     border-radius: 20px;
     margin-top: 75px;
 }
@@ -33,7 +46,6 @@ body {
     display: grid;
     grid-template-columns: auto auto auto;
     grid-gap: 10px;
-    margin: 10px;
 }
 
 // drum pads
@@ -44,13 +56,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(200, 200, 200);
+    background-color: $pads;
     border-radius: 20px;
+    box-shadow: 0 0 2px 0;
     cursor: pointer;
 }
 
-.drum-pad:hover {
-    background-color: rgb(170, 170, 170);
+.pressed {
+    background-color: $pressed;
 }
 
 .pad {
@@ -63,6 +76,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 30px;
 }
 
 // controls
@@ -72,7 +86,8 @@ body {
     align-items: center;
     gap: 10px;
     padding: 10px;
-    background-color: aliceblue;
+    background-color: $display;
+    border-radius: 5px;
 }
 
 #display {
@@ -81,28 +96,30 @@ body {
     align-items: center;
     height: 30px;
     width: 150px;
-    background-color: rgb(221, 221, 221);
+    background-color: $pressed;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 0;
 }
 
 #volume {
-    accent-color: rgb(70, 70, 70);
-    cursor: pointer;
     height: 30px;
     width: 150px;
+    background-color: transparent;
+    cursor: pointer;
     -webkit-appearance: none;
 }
 
 #volume::-webkit-slider-runnable-track {
-    background: black;
-    height: 2px;
+    background: $track;
+    height: 4px;
 }
 
 #volume::-webkit-slider-thumb {
     -webkit-appearance: none;
-    background: black;
+    background: $thumb;
     height: 20px;
     width: 10px;
-    margin-top: -9px;
+    margin-top: -8px;
 }
 
 #kit-select {
@@ -111,27 +128,26 @@ body {
     align-items: center;
     height: 30px;
     width: 150px;
-    background-color: rgb(200, 200, 200);
+    background-color: $pads;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 0;
     cursor: pointer;
 }
 
-#kit-select:hover {
-    background-color: rgb(170, 170, 170);
-}
-
-
 // label
 #label {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     width: 150px;
-    text-align: center;
     font-size: x-small;
     font-style: italic;
+    text-align: left;
     line-height: 1;
-    margin-top: 30px;
 }
 
 #by {
-    margin-top: 5px;
+    text-align: right;
 }
 
 // acessibility 

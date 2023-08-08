@@ -1,5 +1,16 @@
 // to do's
 
+
+// style
+function toggle(elem) {
+    elem.classList.toggle('hover')
+    elem.classList.toggle('pressed')
+    setTimeout(() => {
+        elem.classList.toggle('pressed')
+        elem.classList.toggle('hover')
+    }, 100)
+}
+
 // display
 const display = document.querySelector('#display')
 
@@ -14,6 +25,7 @@ for (let i = 0; i < audioElems.length; i++) {
     tracks.push(audioCtx.createMediaElementSource(audioElems[i]))
 }
 
+// tracks
 const kits = [
     {
         name: 'Kit 1',
@@ -105,14 +117,7 @@ const kitSelect = document.querySelector('#kit-select')
 
 let currentKit = 0
 
-const controller = new AbortController()
-const signal = controller.signal
-
 function nextKit() {
-    controller.abort()
-
-    kitSelect.textContent = kits[currentKit].name
-
     for (let i = 0; i < kits[currentKit].sources.length; i++) {
         audioElems[i].setAttribute(
             'src',
@@ -122,14 +127,19 @@ function nextKit() {
         audioElems[i].setAttribute('data-description', kits[currentKit].sources[i].description)
     }
 
+    kitSelect.textContent = kits[currentKit].name
+
     if (currentKit < kits.length - 1) {
         currentKit++
     } else {
         currentKit = 0
     }
-
-    kitSelect.addEventListener('click', nextKit, signal)
 }
+
+kitSelect.addEventListener('click', () => {
+    nextKit(currentKit)
+    toggle(kitSelect)
+})
 
 nextKit(currentKit)
 
@@ -163,6 +173,8 @@ for (let i = 0; i < drumPads.length; i++) {
         audioElems[i].load()
         audioElems[i].play()
 
+        toggle(drumPads[i])
+
         display.textContent = audioElems[i].dataset.description
     })
 }
@@ -177,6 +189,8 @@ for (let i = 0; i < drumPads.length; i++) {
 
             audioElems[i].load()
             audioElems[i].play()
+
+            toggle(drumPads[i])
 
             display.textContent = audioElems[i].dataset.description
         }
