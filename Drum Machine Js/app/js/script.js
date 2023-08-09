@@ -1,7 +1,4 @@
-// to do's
-
-
-// style
+// hover
 function toggle(elem) {
     elem.classList.toggle('hover')
     elem.classList.toggle('pressed')
@@ -113,7 +110,7 @@ const kits = [
     }
 ]
 
-const kitSelect = document.querySelector('#kit-select')
+const kitSelect = document.querySelector('.kit-select')
 
 let currentKit = 0
 
