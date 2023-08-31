@@ -121,13 +121,14 @@ const kitSelTag = document.querySelector('.kit-select')
 let nextKitI = 0
 function nextKit() {
     for (let i = 0; i < kits[nextKitI].tracks.length; i++) {
-        audioTags[i].setAttribute(
-            'src',
-            kits[nextKitI].directory + kits[nextKitI].tracks[i].source
+        audioTags[i].setAttribute('src', kits[nextKitI].directory + kits[nextKitI].tracks[i].source
         )
         // set description
         audioTags[i].setAttribute('data-description', kits[nextKitI].tracks[i].description)
     }
+    // display
+    pressStyle(kitSelTag)
+    kitSelTag.textContent = kits[nextKitI].name
     // loop
     if (nextKitI < kits.length - 1) {
         nextKitI++
@@ -137,9 +138,6 @@ function nextKit() {
 }
 kitSelTag.addEventListener('click', () => {
     nextKit(nextKitI)
-    // display
-    pressStyle(kitSelTag)
-    kitSelTag.textContent = kits[nextKitI].name
 })
 nextKit(nextKitI)
 
@@ -153,29 +151,25 @@ volumeTag.addEventListener('input', () => {
 
 // drum pads
 const drumPadTags = document.querySelectorAll('.drum-pad')
+function playTrack(i) {
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume()
+    }
+    audioTags[i].load()
+    audioTags[i].play()
+    // display
+    pressStyle(drumPadTags[i])
+    display.textContent = audioTags[i].dataset.description
+}
 for (let i = 0; i < drumPadTags.length; i++) {
     drumPadTags[i].addEventListener('click', () => {
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume()
-        }
-        audioTags[i].load()
-        audioTags[i].play()
-        // display
-        pressStyle(drumPadTags[i])
-        display.textContent = audioTags[i].dataset.description
+        playTrack(i)
     })
 }
 for (let i = 0; i < drumPadTags.length; i++) {
     window.addEventListener('keydown', (e) => {
         if (e.which === drumPadTags[i].textContent.charCodeAt(0)) {
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume()
-            }
-            audioTags[i].load()
-            audioTags[i].play()
-            // display
-            pressStyle(drumPadTags[i])
-            display.textContent = audioTags[i].dataset.description
+            playTrack(i)
         }
     })
 }

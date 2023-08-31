@@ -2,7 +2,7 @@
 const AudioContext = window.AudioContext || window.webkitAudioContext
 const audioCtx = new AudioContext()
 // audio sources
-const audioTags = document.querySelectorAll('.clip')
+const audioTags = $('.clip')
 const sources = []
 for (let i = 0; i < audioTags.length; i++) {
     sources.push(audioCtx.createMediaElementSource(audioTags[i]))
@@ -17,16 +17,12 @@ for (let i = 0; i < sources.length; i++) {
 }
 
 // display
-const display = document.querySelector('#display')
+const display = $('#display')
 
 // press style
 function pressStyle(elem) {
-    elem.classList.toggle('hover')
-    elem.classList.toggle('pressed')
-    setTimeout(() => {
-        elem.classList.toggle('pressed')
-        elem.classList.toggle('hover')
-    }, 100)
+    elem.toggleClass(['hover', 'pressed'])
+    setTimeout(() => { elem.toggleClass(['pressed', 'hover']) }, 100)
 }
 
 // kits
@@ -117,17 +113,15 @@ const kits = [
     }
 ]
 
-const kitSelTag = document.querySelector('.kit-select')
+const kitSelTag = $('.kit-select')
 let nextKitI = 0
 function nextKit() {
     for (let i = 0; i < kits[nextKitI].tracks.length; i++) {
-        audioTags[i].setAttribute(
-            'src',
-            kits[nextKitI].directory + kits[nextKitI].tracks[i].source
-        )
-        // set description
-        audioTags[i].setAttribute('data-description', kits[nextKitI].tracks[i].description)
+        audioTags.eq(i).attr('src', kits[nextKitI].directory + kits[nextKitI].tracks[i].source).data('description', kits[nextKitI].tracks[i].description)
     }
+    // display
+    pressStyle(kitSelTag)
+    kitSelTag.text(kits[nextKitI].name)
     // loop
     if (nextKitI < kits.length - 1) {
         nextKitI++
@@ -135,47 +129,40 @@ function nextKit() {
         nextKitI = 0
     }
 }
-kitSelTag.addEventListener('click', () => {
+kitSelTag.click(() => {
     nextKit(nextKitI)
-    // display
-    pressStyle(kitSelTag)
-    kitSelTag.textContent = kits[nextKitI].name
 })
 nextKit(nextKitI)
 
 // volume
-const volumeTag = document.querySelector('#volume')
-volumeTag.addEventListener('input', () => {
-    gainNode.gain.value = volumeTag.value
+const volumeTag = $('#volume')
+volumeTag.on('input', () => {
+    gainNode.gain.value = volumeTag.val()
     // display 
-    display.textContent = `Volume: ${Math.round(volumeTag.value * 100)}%`
+    display.text(`Volume: ${Math.round(volumeTag.val() * 100)}%`)
 })
 
 // drum pads
-const drumPadTags = document.querySelectorAll('.drum-pad')
+const drumPadTags = $('.drum-pad')
+function playTrack(i) {
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume()
+    }
+    audioTags[i].load()
+    audioTags[i].play()
+    // display
+    pressStyle(drumPadTags.eq(i))
+    display.text(audioTags.eq(i).data('description'))
+}
 for (let i = 0; i < drumPadTags.length; i++) {
-    drumPadTags[i].addEventListener('click', () => {
-        if (audioCtx.state === 'suspended') {
-            audioCtx.resume()
-        }
-        audioTags[i].load()
-        audioTags[i].play()
-        // display
-        pressStyle(drumPadTags[i])
-        display.textContent = audioTags[i].dataset.description
+    drumPadTags.eq(i).click(() => {
+        playTrack(i)
     })
 }
 for (let i = 0; i < drumPadTags.length; i++) {
-    window.addEventListener('keydown', (e) => {
-        if (e.which === drumPadTags[i].textContent.charCodeAt(0)) {
-            if (audioCtx.state === 'suspended') {
-                audioCtx.resume()
-            }
-            audioTags[i].load()
-            audioTags[i].play()
-            // display
-            pressStyle(drumPadTags[i])
-            display.textContent = audioTags[i].dataset.description
+    $(window).keydown((e) => {
+        if (e.which === drumPadTags.eq(i).text().charCodeAt(0)) {
+            playTrack(i)
         }
     })
 }
